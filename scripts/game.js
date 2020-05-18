@@ -49,24 +49,44 @@ const main = (function () {
     }
   }
 
+  function handleGameRound(coordinates) {
+    const xCoordinate = coordinates.x;
+    const yCoordinate = coordinates.y;
+
+    engine.moveMouse(xCoordinate, yCoordinate);
+    setTimeout(function () {
+      if (gameOn) {
+        engine.moveCat(xCoordinate, yCoordinate);
+        checkGameEnd();
+      }
+    }, catDelay);
+    engine.createTrailMarkIfNeeded(xCoordinate, yCoordinate, catDelay);
+    engine.eatCheeseIfPossible(xCoordinate, yCoordinate);
+  }
+
   function handleMouseMove(mouseEvent) {
     if (gameOn) {
       const racingArea = engine.getRacingArea();
       const coordinates = utils.getCoordinatesFromMouseMove(mouseEvent, racingArea);
 
-      const xCoordinate = coordinates.x;
-      const yCoordinate = coordinates.y;
-
-      engine.moveMouse(xCoordinate, yCoordinate);
-      setTimeout(function () {
-        if (gameOn) {
-          engine.moveCat(xCoordinate, yCoordinate);
-          checkGameEnd();
-        }
-      }, catDelay);
-      engine.createTrailMarkIfNeeded(xCoordinate, yCoordinate, catDelay);
-      engine.eatCheeseIfPossible(xCoordinate, yCoordinate);
+      handleGameRound(coordinates);
     }
+  }
+
+  function handleTouchStart(event) {
+    console.log('touch started!', event);
+  }
+
+  function handleTouchMove(event) {
+    if (gameOn) {
+      const racingArea = engine.getRacingArea();
+      const coordinates = utils.getCoordinatesFromTouchEvent(event, racingArea);
+      handleGameRound(coordinates);
+    }
+  }
+
+  function handleTouchEnd(event) {
+    console.log('touch ended!', event);
   }
 
   function startGame() {
@@ -77,5 +97,5 @@ const main = (function () {
 
   window.onload = startGame;
 
-  return { handleMouseMove: handleMouseMove };
+  return { handleMouseMove, handleTouchStart, handleTouchMove, handleTouchEnd };
 })();

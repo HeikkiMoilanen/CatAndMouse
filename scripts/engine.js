@@ -68,11 +68,6 @@ window.gameEngine = (function () {
     }, fadeoutDelay);
   }
 
-  function updateScore(newScore) {
-    score = newScore;
-    scoreElement.textContent = score;
-  }
-
   function createTrailMarkIfNeeded(xCoordinate, yCoordinate, fadeoutDelay) {
     if (!trailMarkCooldown) {
       createTrailMark(xCoordinate, yCoordinate, fadeoutDelay);
@@ -81,6 +76,11 @@ window.gameEngine = (function () {
         trailMarkCooldown = false;
       }, 20);
     }
+  }
+
+  function updateScore(newScore) {
+    score = newScore;
+    scoreElement.textContent = score;
   }
 
   function eatCheese() {

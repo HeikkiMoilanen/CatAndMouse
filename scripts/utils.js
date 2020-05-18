@@ -49,6 +49,15 @@ window.gameUtils = function() {
     );
   }
 
+  function getCoordinatesFromTouchEvent(touchEvent, racingAreaElement) {
+    const touch = touchEvent.touches[0];
+    return transformToRacingAreaCoordinates(
+      touch.clientX,
+      touch.clientY,
+      racingAreaElement
+    );
+  }
+
   function areElementsInRange(element1Coord, element2Coord, range) {
     const deltaX = Math.abs(element1Coord.x - element2Coord.x);
     const deltaY = Math.abs(element1Coord.y - element2Coord.y);
@@ -65,6 +74,7 @@ window.gameUtils = function() {
     getRandomInt,
     getCoordinatesFromMouseMove,
     getCoordinatesInsideRacingArea,
+    getCoordinatesFromTouchEvent,
     transformToRacingAreaCoordinates
   }
 }();
