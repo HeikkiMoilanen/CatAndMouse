@@ -1,3 +1,4 @@
+/* eslint-disable-next-line no-unused-vars */
 const main = (function () {
   let scaredMouseElement;
   let scaryCatElement;
@@ -7,15 +8,19 @@ const main = (function () {
   let score = 0;
   let gameOn = false;
   let catDelay = 1000;
+  let catSpeedInterval;
   const catDelays = [1000, 750, 500, 400, 300, 200, 100];
 
-  setInterval(function () {
-    const currentDelayIndex = catDelays.indexOf(catDelay);
-    if (currentDelayIndex !== catDelays.length - 1) {
-      catDelay = catDelays[currentDelayIndex + 1];
-      console.log("setting cat speed: ", catDelay);
-    }
-  }, 10000);
+  function setCatSpeedInterval() {
+    catSpeedInterval = setInterval(function () {
+      console.log('cat speed set');
+      const currentDelayIndex = catDelays.indexOf(catDelay);
+      if (currentDelayIndex !== catDelays.length - 1) {
+        catDelay = catDelays[currentDelayIndex + 1];
+        console.log("setting cat speed: ", catDelay);
+      }
+    }, 10000);
+  }
 
   function startGame() {
     scaredMouseElement = document.getElementById("scaredMouse");
@@ -23,17 +28,18 @@ const main = (function () {
     cheeseElement = document.getElementById("cheese");
     racingAreaElement = document.getElementById("racing-area");
     scoreElement = document.getElementById("score");
+    setCatSpeedInterval();
     gameOn = true;
   }
 
   window.onload = startGame;
 
-  function setMouseImagePosition(xCoordinate, yCoordinate) {
+  function moveMouse(xCoordinate, yCoordinate) {
     scaredMouseElement.style.left = xCoordinate + "px";
     scaredMouseElement.style.top = yCoordinate + "px";
   }
 
-  function setCatImagePosition(xCoordinate, yCoordinate) {
+  function moveCat(xCoordinate, yCoordinate) {
     scaryCatElement.style.left = xCoordinate + "px";
     scaryCatElement.style.top = yCoordinate + "px";
   }
@@ -163,11 +169,12 @@ const main = (function () {
 
   function reset() {
     updateScore(0);
-    setCatImagePosition(0, 0);
+    moveCat(0, 0);
+    catDelay = catDelays[0];
+    clearInterval(catSpeedInterval);
     setTimeout(function() {
       gameOn = true;
-    }, Math.max(catDelay, 1000));
-    catDelay = catDelays[0];
+    }, 1000);
   }
 
   function checkGameEnd() {
@@ -195,10 +202,10 @@ const main = (function () {
       const xCoordinate = coordinates.x;
       const yCoordinate = coordinates.y;
 
-      setMouseImagePosition(xCoordinate, yCoordinate);
+      moveMouse(xCoordinate, yCoordinate);
       setTimeout(function () {
         if (gameOn) {
-          setCatImagePosition(xCoordinate, yCoordinate);
+          moveCat(xCoordinate, yCoordinate);
           checkGameEnd();
         }
       }, catDelay);
