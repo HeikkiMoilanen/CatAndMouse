@@ -36,7 +36,7 @@ const main = (function () {
     engine.moveCat(0, 0);
     endCatSpeedUp();
     setTimeout(function() {
-      gameOn = true;
+      startGame();
     }, 1000);
   }
 
