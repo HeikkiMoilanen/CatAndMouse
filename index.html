@@ -3,6 +3,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <head>
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+
+    <script>
+      (function initializeFirebase() {
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCz4NWEzdrc9x5Oq3i4gYuWIV1a_IuIsAk",
+          authDomain: "catandmouse-1241a.firebaseapp.com",
+          databaseURL: "https://catandmouse-1241a.firebaseio.com",
+          projectId: "catandmouse-1241a",
+          storageBucket: "catandmouse-1241a.appspot.com",
+          messagingSenderId: "323358163843",
+          appId: "1:323358163843:web:9f6d5bb34bf21fbc042cb6",
+          measurementId: "G-M30R81205E"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+      })();
+    </script>
+
     <script type="text/javascript" src="scripts/utils.js"></script>
     <script type="text/javascript" src="scripts/engine.js"></script>
     <script type="text/javascript" src="scripts/game.js"></script>
@@ -13,12 +41,24 @@
     ontouchmove="main.handleTouchMove(event)"
     ontouchend="main.handleTouchEnd(event)"
   >
-    <div class="racing-area-container">
-      <div class="score" id="score">-1</div>
+    <div class="racing-area-container" id="racing-area-container">
+      <div class="score" id="score">0</div>
       <div class="racing-area" id="racing-area">
-        <img id="scaredMouse" class="game-character" src="mouse.png" />
-        <img id="scaryCat" class="game-character" src="cat.png" />
-        <img id="cheese" class="game-character" src="cheese.png" />
+        <div id="startModal" class="modal start-modal">
+          <h1 class="modal-header">Run Mouse Run!</h1>
+          <img class="instructions-image" src="cheese.png" alt="cheese" />
+          <p class="modal-instructions">Eat cheese and prosper!</p>
+          <button id="startButton" class="primary-button" onclick="main.handleStartClick()">Start</button>
+        </div>
+        <div id="scoreScreen" class="modal score-screen hidden">
+          <h1 class="start-modal-header">Caught! Yummy!</h1>
+          <img class="instructions-image" src="cat.png" alt="cat" />
+          <p id="scoreScreenScoreField" class="modal-instructions"></p>
+          <button id="startButton" class="primary-button" onclick="main.handleRestartClick()">Go again!</button>
+        </div>
+        <img id="scaredMouse" class="game-character" src="mouse.png" alt="mouse" />
+        <img id="scaryCat" class="game-character" src="cat.png" alt="cat" />
+        <img id="cheese" class="game-character" src="cheese.png" alt="cheese" />
       </div>
     </div>
   </body>
