@@ -55,13 +55,26 @@ const main = (function () {
   }
 
   function showScoreScreen() {
+    const PERSONAL_BEST = 'personalBest';
     const startModal = document.getElementById("scoreScreen");
     const scoreScreenScoreField = document.getElementById("scoreScreenScoreField");
+    const scoreScreenPersonalBestField = document.getElementById("scoreScreenPersonalBestField");
     const score = engine.getScore();
     const scoreText = score === 1
       ? 'You scored ' + score + ' point'
       : 'You scored ' + score + ' points';
+
+    const previousBest = localStorage.getItem(PERSONAL_BEST);
+    let personalBestText = '';
+    if (!previousBest || score > previousBest) {
+      personalBestText = 'New personal best! Congratulations!'
+      localStorage.setItem(PERSONAL_BEST, score);
+    } else {
+      personalBestText = 'Personal best:\n' + previousBest + ' points'
+    }
+
     scoreScreenScoreField.textContent = scoreText;
+    scoreScreenPersonalBestField.textContent = personalBestText;
     startModal.classList.remove("hidden");
   }
 

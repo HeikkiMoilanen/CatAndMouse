@@ -43,8 +43,9 @@ h1 {
   text-align: center;
 }
 
-p {
-  margin: 8px 0 0;
+p, .personal-best {
+  margin: 16px 0 0;
+  white-space: pre-wrap;
 }
 
 button {
