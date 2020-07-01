@@ -29,17 +29,16 @@ const main = (function () {
   const defaultCatDelay = 1000;
   const catDelays = [1000, 750, 500, 400, 300, 200, 100];
 
+  let isDraggingMouse = false;
   let gameOn = false;
   let catDelay = defaultCatDelay;
   let catSpeedInterval;
 
   function startCatSpeedUp() {
     catSpeedInterval = setInterval(function () {
-      console.log("cat speed set");
       const currentDelayIndex = catDelays.indexOf(catDelay);
       if (currentDelayIndex !== catDelays.length - 1) {
         catDelay = catDelays[currentDelayIndex + 1];
-        console.log("setting cat speed: ", catDelay);
       }
     }, 10000);
   }
@@ -85,7 +84,7 @@ const main = (function () {
 
   function restart() {
     engine.updateScore(0);
-    engine.moveCat(0, 0);
+    engine.hideCat();
     endCatSpeedUp();
     startGame();
   }
@@ -118,7 +117,6 @@ const main = (function () {
   }
 
   function handleMouseMove(mouseEvent) {
-    console.log('mousemove', gameOn);
     if (gameOn) {
       const racingArea = engine.getRacingArea();
       const coordinates = utils.getCoordinatesFromMouseMove(
@@ -131,31 +129,46 @@ const main = (function () {
   }
 
   function handleTouchStart(event) {
-    console.log("touch started!", event);
+    if (event.path[0] === engine.getMouse()) {
+      isDraggingMouse = true;
+    }
+    if (gameOn) {
+      event.preventDefault();
+    }
   }
 
   function handleTouchMove(event) {
-    if (gameOn) {
+    if (gameOn && isDraggingMouse) {
       const racingArea = engine.getRacingArea();
       const coordinates = utils.getCoordinatesFromTouchEvent(event, racingArea);
       handleGameRound(coordinates);
     }
   }
 
-  function handleStartClick() {
+  function handleTouchEnd() {
+    isDraggingMouse = false;
+  }
+
+  function handleStartClick(event) {
     hideStartModal();
     hideScoreScreen();
     startGame();
+    moveMouseCharacterToMousePosition(event);
   }
 
-  function handleRestartClick() {
+  function moveMouseCharacterToMousePosition(mouseEvent) {
+    const racingArea = engine.getRacingArea();
+    const coordinates = utils.getCoordinatesFromMouseMove(
+      mouseEvent,
+      racingArea
+    );
+    engine.moveMouse(coordinates.x, coordinates.y);
+  }
+
+  function handleRestartClick(event) {
     hideScoreScreen();
+    moveMouseCharacterToMousePosition(event);
     restart();
-  }
-  
-
-  function handleTouchEnd(event) {
-    console.log("touch ended!", event);
   }
 
   function startGame() {

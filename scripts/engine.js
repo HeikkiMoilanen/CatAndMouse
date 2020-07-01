@@ -48,8 +48,20 @@ window.gameEngine = (function () {
   }
 
   function moveCat(xCoordinate, yCoordinate) {
+    if (scaryCatElement.classList.contains('hidden')) {
+      showCat();
+    }
+
     scaryCatElement.style.left = xCoordinate + "px";
     scaryCatElement.style.top = yCoordinate + "px";
+  }
+
+  function hideCat() {
+    scaryCatElement.classList.add("hidden");
+  }
+
+  function showCat() {
+    scaryCatElement.classList.remove("hidden");
   }
 
   function createTrailMark(xCoordinate, yCoordinate, fadeoutDelay) {
@@ -138,6 +150,8 @@ window.gameEngine = (function () {
     hasCatCaughtMouse,
     initialize,
     moveCat,
+    hideCat,
+    showCat,
     moveMouse,
     updateScore
   };

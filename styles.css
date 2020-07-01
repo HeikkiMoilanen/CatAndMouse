@@ -26,9 +26,10 @@ body {
   background-color: #F5F5F5;
   border: 1px solid #1B1B1B;
   height: 80vh;
+  max-width: 640px;
   padding: 24px 32px;
   position: relative;
-  width: 80vw;
+  width: 100vw;
 }
 
 .racing-area-container.game-on {
@@ -73,7 +74,6 @@ button:hover {
 
 .game-character {
   width: 60px;
-  pointer-events: none;
   transform: translate(-50%, -50%);
   position: absolute;
   z-index: 2;

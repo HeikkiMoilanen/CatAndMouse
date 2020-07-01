@@ -48,17 +48,17 @@
           <h1 class="modal-header">Run Mouse Run!</h1>
           <img class="instructions-image" src="cheese.png" alt="cheese" />
           <p class="modal-instructions">Eat cheese and prosper!</p>
-          <button id="startButton" class="primary-button" onclick="main.handleStartClick()">Start</button>
+          <button id="startButton" class="primary-button" onclick="main.handleStartClick(event)">Start</button>
         </div>
         <div id="scoreScreen" class="modal score-screen hidden">
           <h1 class="start-modal-header">Caught! Yummy!</h1>
           <img class="instructions-image" src="cat.png" alt="cat" />
           <p id="scoreScreenScoreField" class="modal-instructions"></p>
           <p id="scoreScreenPersonalBestField" class="personal-best"></p>
-          <button id="startButton" class="primary-button" onclick="main.handleRestartClick()">Go again!</button>
+          <button id="startButton" class="primary-button" onclick="main.handleRestartClick(event)">Go again!</button>
         </div>
         <img id="scaredMouse" class="game-character" src="mouse.png" alt="mouse" />
-        <img id="scaryCat" class="game-character" src="cat.png" alt="cat" />
+        <img id="scaryCat" class="game-character hidden" src="cat.png" alt="cat" />
         <img id="cheese" class="game-character" src="cheese.png" alt="cheese" />
       </div>
     </div>
